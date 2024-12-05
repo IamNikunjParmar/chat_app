@@ -33,6 +33,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
 
     return BlocBuilder<OnboardingPageCubit, OnboardingPageState>(
       builder: (context, state) {
@@ -93,11 +94,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                       child: Container(
                         alignment: Alignment.center,
                         height: screenHeight * 0.065,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppColor.primaryGreen,
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(50),
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: theme.brightness == Brightness.light ? Colors.grey : Colors.black.withOpacity(0.1),
+                              offset: const Offset(3, 3),
+                              blurRadius: 5,
+                            ),
+                          ],
                         ),
                         child: Text(
                           state.currentIndex == 0 ? 'Next' : 'Start Messaging',

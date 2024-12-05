@@ -9,7 +9,7 @@ class ProfilePageView extends StatelessWidget {
   static const String routeName = 'profile_page_view';
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginPageCubit(),
+      create: (context) => LoginPageCubit(context: context, const LoginPageState()),
       child: const ProfilePageView(),
     );
   }

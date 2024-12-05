@@ -80,7 +80,7 @@ class EmailTextFormField extends StatelessWidget {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: Colors.yellow,
+            color: AppColor.primaryGreen,
             width: 2,
           ),
         ),
@@ -106,6 +106,7 @@ class PasswordTextField extends StatefulWidget {
     this.labelText,
     this.prefixIcon,
     this.suffix,
+    this.keyboardType,
   });
 
   final TextEditingController controller;
@@ -119,6 +120,7 @@ class PasswordTextField extends StatefulWidget {
   final ValueChanged? onSubmitted;
   final Widget? prefixIcon;
   final Widget? suffix;
+  final TextInputType? keyboardType;
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
@@ -143,7 +145,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       textInputAction: widget.textInputAction,
       onFieldSubmitted: widget.onSubmitted,
-      keyboardType: TextInputType.text,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         errorMaxLines: 5,
         labelText: widget.labelText,

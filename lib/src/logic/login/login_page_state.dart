@@ -1,32 +1,21 @@
 part of 'login_page_cubit.dart';
 
 class LoginPageState extends Equatable {
-  final bool isValidPhoneNumber;
-  final String errorMsg;
-  final String verificationId;
+  final bool loginSuccess;
   final bool isLoading;
 
-  const LoginPageState({
-    this.isValidPhoneNumber = false,
-    this.errorMsg = '',
-    this.verificationId = '',
-    this.isLoading = false,
-  });
+  const LoginPageState({this.loginSuccess = false, this.isLoading = false});
 
-  LoginPageState copyWith({bool? isValidPhoneNumber, String? errorMsg, String? verificationId, bool? isLoading}) {
+  LoginPageState copyWith({bool? loginSuccess, bool? isLoading}) {
     return LoginPageState(
-      isValidPhoneNumber: isValidPhoneNumber ?? this.isValidPhoneNumber,
-      errorMsg: errorMsg ?? this.errorMsg,
-      verificationId: verificationId ?? this.verificationId,
+      loginSuccess: loginSuccess ?? this.loginSuccess,
       isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
   List<Object> get props => [
-        isValidPhoneNumber,
-        errorMsg,
-        verificationId,
         isLoading,
+        loginSuccess,
       ];
 }

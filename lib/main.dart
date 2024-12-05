@@ -1,7 +1,6 @@
 import 'package:chat_app/src/app/routes/app_routes.dart';
 import 'package:chat_app/src/package/resocues/theme.dart';
 import 'package:chat_app/src/package/resocues/theme_provider.dart';
-import 'package:chat_app/src/ui/otp/otp_screen_view.dart';
 import 'package:chat_app/src/ui/splash/splash_screen_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
