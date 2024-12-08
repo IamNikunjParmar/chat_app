@@ -3,6 +3,7 @@ part of 'create_page_cubit.dart';
 class CreatePageState extends Equatable {
   final bool registerSuccess;
   final bool isLoading;
+
   const CreatePageState({
     this.registerSuccess = false,
     this.isLoading = false,

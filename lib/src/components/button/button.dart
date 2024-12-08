@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      height: screenHeight * 0.06,
+      height: screenHeight,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(

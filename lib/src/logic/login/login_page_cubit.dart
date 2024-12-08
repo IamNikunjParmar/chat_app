@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_app/src/ui/choose%20Image/choose_image_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,11 +66,11 @@ class LoginPageCubit extends Cubit<LoginPageState> {
         }
         ShowSuccessToast.show(context, "Success", 'Welcome For the Chatter Box App');
         if (context.mounted) {
-          // Navigator.pushNamedAndRemoveUntil(
-          //   context,
-          //   DashboardPageView.routeName,
-          //   (route) => false,
-          // );
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            ChooseImageView.routeName,
+            (route) => false,
+          );
         }
       } else {
         ShowErrorToast.show(context, 'Failed', 'Please try Again');

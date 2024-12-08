@@ -80,7 +80,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                       ),
                     ),
                     const Gap(20),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         if (state.currentIndex == 0) {
                           _pageController.nextPage(

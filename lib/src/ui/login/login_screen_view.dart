@@ -1,4 +1,5 @@
 import 'package:chat_app/src/package/utils/image_utils.dart';
+import 'package:chat_app/src/ui/choose%20Image/choose_image_view.dart';
 import 'package:chat_app/src/ui/create%20signUp/create_screen_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,139 +48,200 @@ class LoginScreenView extends StatelessWidget {
             Scaffold(
               resizeToAvoidBottomInset: false,
               body: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: globalKey,
-                      child: Column(
-                        children: [
-                          const Gap(20),
-                          const Center(
-                            child: Text(
-                              "Login here",
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.primaryGreen,
+                child: BlocListener<LoginPageCubit, LoginPageState>(
+                  listener: (context, state) {
+                    if (state.loginSuccess == true) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        ChooseImageView.routeName,
+                        (route) => false,
+                      );
+                      emailController.clear();
+                      passwordController.clear();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: globalKey,
+                        child: Column(
+                          children: [
+                            const Gap(20),
+                            const Center(
+                              child: Text(
+                                "Login here",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.primaryGreen,
+                                ),
                               ),
                             ),
-                          ),
-                          const Gap(20),
-                          Center(
-                            child: Text(
+                            const Gap(20),
+                            Center(
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                "Welcome back you’ve \n  been missed!",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ),
+                            const Gap(70),
+                            EmailTextFormField(
+                              controller: emailController,
+                              hintText: 'Enter Your Email',
+                              autofocus: false,
+                              validator: validateEmail,
+                              textInputAction: TextInputAction.next,
+                              hintStyle: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                            ),
+                            const Gap(30),
+                            PasswordTextField(
+                              controller: passwordController,
+                              hintText: 'Enter Your Password',
+                              validator: validatePassword,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            const Gap(30),
+                            const Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                "Forgot your password?",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.primaryGreen,
+                                ),
+                              ),
+                            ),
+                            const Gap(30),
+                            GestureDetector(
+                              onTap: () {
+                                if (globalKey.currentState!.validate()) {
+                                  context.read<LoginPageCubit>().loginWithEmailAndPassword(
+                                        email: emailController.text.trim(),
+                                        password: passwordController.text.trim(),
+                                      );
+                                }
+                              },
+                              child: CustomButton(
+                                screenHeight: screenHeight * 0.06,
+                                onPressed: () {},
+                                child: const Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Gap(30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    "Create new Account?",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, CreateScreenView.routeName);
+                                  },
+                                  child: const Text(
+                                    textAlign: TextAlign.center,
+                                    " Sign Up",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColor.primaryGreen,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(110),
+                            const Text(
                               textAlign: TextAlign.center,
-                              "Welcome back you’ve \n  been missed!",
+                              "Or continue With",
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                          ),
-                          const Gap(70),
-                          EmailTextFormField(
-                            controller: emailController,
-                            hintText: 'Enter Your Email',
-                            autofocus: false,
-                            validator: validateEmail,
-                            textInputAction: TextInputAction.next,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                          ),
-                          const Gap(30),
-                          PasswordTextField(
-                            controller: passwordController,
-                            hintText: 'Enter Your Password',
-                            validator: validatePassword,
-                            textInputAction: TextInputAction.next,
-                          ),
-                          const Gap(30),
-                          const Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "Forgot your password?",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w800,
                                 color: AppColor.primaryGreen,
                               ),
                             ),
-                          ),
-                          const Gap(30),
-                          GestureDetector(
-                            onTap: () {
-                              if (globalKey.currentState!.validate()) {
-                                context.read<LoginPageCubit>().loginWithEmailAndPassword(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                    );
-                              }
-                            },
-                            child: CustomButton(
-                              screenHeight: screenHeight,
-                              onPressed: () {},
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Gap(30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  "Create new Account?",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey,
+                            const Gap(20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    context.read<LoginPageCubit>().loginWithGoogle();
+                                  },
+                                  child: Container(
+                                    height: screenHeight * 0.06,
+                                    width: screenWidth * 0.2,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.primaryGreen,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: theme.brightness == Brightness.light
+                                              ? Colors.grey
+                                              : Colors.black.withOpacity(0.5),
+                                          offset: const Offset(3, 3),
+                                          blurRadius: 5,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Transform.scale(
+                                      scale: 0.69,
+                                      child: Image.asset(
+                                        ImagePath.google,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, CreateScreenView.routeName);
-                                },
-                                child: const Text(
-                                  textAlign: TextAlign.center,
-                                  " Sign Up",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                Container(
+                                  height: screenHeight * 0.06,
+                                  width: screenWidth * 0.2,
+                                  decoration: BoxDecoration(
                                     color: AppColor.primaryGreen,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: theme.brightness == Brightness.light
+                                            ? Colors.grey
+                                            : Colors.black.withOpacity(0.5),
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Transform.scale(
+                                    scale: 0.69,
+                                    child: Image.asset(ImagePath.facebook),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const Gap(110),
-                          const Text(
-                            textAlign: TextAlign.center,
-                            "Or continue With",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.primaryGreen,
-                            ),
-                          ),
-                          const Gap(20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  context.read<LoginPageCubit>().loginWithGoogle();
-                                },
-                                child: Container(
+                                Container(
                                   height: screenHeight * 0.06,
                                   width: screenWidth * 0.2,
                                   decoration: BoxDecoration(
@@ -198,58 +260,14 @@ class LoginScreenView extends StatelessWidget {
                                   child: Transform.scale(
                                     scale: 0.69,
                                     child: Image.asset(
-                                      ImagePath.google,
+                                      ImagePath.apple,
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                height: screenHeight * 0.06,
-                                width: screenWidth * 0.2,
-                                decoration: BoxDecoration(
-                                  color: AppColor.primaryGreen,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: theme.brightness == Brightness.light
-                                          ? Colors.grey
-                                          : Colors.black.withOpacity(0.5),
-                                      offset: const Offset(3, 3),
-                                      blurRadius: 5,
-                                    ),
-                                  ],
-                                ),
-                                child: Transform.scale(
-                                  scale: 0.69,
-                                  child: Image.asset(ImagePath.facebook),
-                                ),
-                              ),
-                              Container(
-                                height: screenHeight * 0.06,
-                                width: screenWidth * 0.2,
-                                decoration: BoxDecoration(
-                                  color: AppColor.primaryGreen,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: theme.brightness == Brightness.light
-                                          ? Colors.grey
-                                          : Colors.black.withOpacity(0.5),
-                                      offset: const Offset(3, 3),
-                                      blurRadius: 5,
-                                    ),
-                                  ],
-                                ),
-                                child: Transform.scale(
-                                  scale: 0.69,
-                                  child: Image.asset(
-                                    ImagePath.apple,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

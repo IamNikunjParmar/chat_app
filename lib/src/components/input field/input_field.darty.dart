@@ -16,6 +16,8 @@ class EmailTextFormField extends StatelessWidget {
   final bool isReadOnly;
   final Widget? suffix;
   final AutovalidateMode? autovalidateMode;
+  final TextStyle? hintStyle;
+  final TextStyle? style;
 
   const EmailTextFormField({
     super.key,
@@ -32,6 +34,8 @@ class EmailTextFormField extends StatelessWidget {
     this.suffix,
     this.onChanged,
     this.autovalidateMode,
+    this.hintStyle,
+    this.style,
   });
 
   @override
@@ -43,6 +47,7 @@ class EmailTextFormField extends StatelessWidget {
       validator: validator,
       controller: controller,
       focusNode: focusNode,
+      style: style,
       autofocus: autofocus,
       autofillHints: autofillHints,
       textInputAction: textInputAction,
@@ -52,18 +57,15 @@ class EmailTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,
-        hintStyle: const TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-        ),
+        hintStyle: hintStyle,
         suffixIcon: suffix,
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: const BorderSide(
-        //     color: AppColor.primaryGreen,
-        //     width: 2,
-        //   ),
-        // ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: AppColor.primaryGreen,
+            width: 2,
+          ),
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -172,6 +174,13 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
+            width: 2,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: AppColor.primaryGreen,
             width: 2,
           ),
         ),

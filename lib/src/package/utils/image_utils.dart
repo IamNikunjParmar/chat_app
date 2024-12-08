@@ -5,4 +5,5 @@ class ImagePath {
   static const String google = "assets/images/google.png";
   static const String facebook = "assets/images/fb.png";
   static const String apple = "assets/images/apple.png";
+  static const String gallery = 'assets/images/gallery.png';
 }

@@ -16,6 +16,7 @@ class CreatePageCubit extends Cubit<CreatePageState> {
   final auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;
   createAccount({required String userName, required String email, required String password}) async {
+    emit(state.copyWith(isLoading: true));
     try {
       final newUser = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -24,13 +25,18 @@ class CreatePageCubit extends Cubit<CreatePageState> {
 
       await fireStore.collection('Users').doc(newUser.user!.uid).set({
         'userName': userName,
+        'about': '',
         'email': email,
         'id': newUser.user!.uid,
       });
 
       User? user = newUser.user;
-      Log.debug(user);
 
+      if (user != null) {
+        emit(state.copyWith(isLoading: true, registerSuccess: true));
+        ShowSuccessToast.show(context, "Account is Registered", 'Please Login Now');
+      }
+      Log.debug(user);
       return 'Register Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak password') {
@@ -43,6 +49,7 @@ class CreatePageCubit extends Cubit<CreatePageState> {
       }
     } catch (e) {
       Log.error(e);
+      emit(state.copyWith(isLoading: false));
     }
   }
 }
